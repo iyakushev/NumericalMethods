@@ -57,28 +57,41 @@ public class Main {
     }
 
     private static void rotations(double[][] matrix) {
+
         double[][] sol=new double[matrix.length][1];
         double[] temp_first=new double[matrix[0].length];
         double[] temp_second=new double[matrix[0].length];
-        for(int i=0; i<matrix.length-1; i++) {
-            for (int j = i + 1; j < matrix.length; j++) {
-                double divisor = Math.sqrt(Math.pow(matrix[i][i], 2) + Math.pow(matrix[j][i], 2));
-                double C = matrix[i][i] / divisor;
-                double S = matrix[j][i] / divisor;
 
-                for (int el = 0; el < matrix[i].length; el++) {
-                    temp_first[el] = matrix[i][el] * C + matrix[j][el] * S;
-                    temp_second[el] = matrix[i][el] * (-S) + matrix[j][el] * C;
-                }
+        if(check(matrix)) {
 
-                for (int el = 0; el < matrix[i].length; el++) {
-                    matrix[i][el] = temp_first[el];
-                    matrix[j][el] = temp_second[el];
+            for (int i = 0; i < matrix.length - 1; i++) {
+                for (int j = i + 1; j < matrix.length; j++) {
+                    double divisor = Math.sqrt(Math.pow(matrix[i][i], 2) + Math.pow(matrix[j][i], 2));
+                    double C = matrix[i][i] / divisor;
+                    double S = matrix[j][i] / divisor;
+
+                    for (int el = 0; el < matrix[i].length; el++) {
+                        temp_first[el] = matrix[i][el] * C + matrix[j][el] * S;
+                        temp_second[el] = matrix[i][el] * (-S) + matrix[j][el] * C;
+                    }
+
+                    for (int el = 0; el < matrix[i].length; el++) {
+                        matrix[i][el] = temp_first[el];
+                        matrix[j][el] = temp_second[el];
+                    }
                 }
             }
+
+            double det = 1;
+
+            for (int i = 0; i < matrix.length; i++)
+                det *= matrix[i][i];
+
+            System.out.println("DET = " + det);
         }
 
-        print(matrix,false);
+        //This peace will solve matrix with a simple backtrace.
+        /*print(matrix,false);
 
         if(!solvable(matrix)) {
             System.out.print("I don't think we can really solve this system. Too many solutions.");
@@ -97,5 +110,21 @@ public class Main {
         }
         System.out.print("END:\n");
         print(sol,true);
+    }*/
+    }
+
+    private static boolean check(double[][] matrix) {
+        double sum=0.0;
+        for(int i=0; i<matrix.length; i++) {
+            sum=0.0;
+            for (int j = 0; j < matrix.length; j++)
+                if (i != j)
+                    sum+= matrix[i][j];
+            if (Math.abs(matrix[i][i])-Math.abs(sum)<0){
+                System.out.println(Math.abs(matrix[i][i]));
+                return false;
+            }
+        }
+        return true;
     }
 }
