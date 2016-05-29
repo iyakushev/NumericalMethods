@@ -40,6 +40,10 @@ public class Main {
         }
     }
 
+    /**
+     * @param m matrix of LSE
+     * @return if matrix can be solved
+     */
     private static boolean solvable(double[][] m) {
         boolean state=false;
         for(int i=0; i<m.length-1; i++)
@@ -56,6 +60,10 @@ public class Main {
         return m_transposed;
     }
 
+    /**
+     * Solve matrix with rotations method
+     * @param matrix matrix of LSE
+     */
     private static void rotations(double[][] matrix) {
 
         double[][] sol=new double[matrix.length][1];
@@ -113,6 +121,11 @@ public class Main {
     }*/
     }
 
+    /**
+     * Checks if method can be applied to a matrix
+     * @param matrix matrix of LSE
+     * @return if it can be solved
+     */
     private static boolean check(double[][] matrix) {
         double sum=0.0;
         for(int i=0; i<matrix.length; i++) {
